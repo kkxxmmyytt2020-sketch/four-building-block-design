@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Literature Dashboard — [Construct Name]</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel-bg: #f7f7f8;
+    --border: #e0e0e0;
+    --text: #1a1a1a;
+    --muted: #666666;
+    --jingle: #fde2e2;
+    --jangle: #fff3cd;
+    --clear: #e2f5e9;
+    --accent: #3a5a8c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  h1 { font-size: 1.4rem; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); margin-bottom: 24px; font-size: 0.9rem; }
+  .summary-strip {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 0.9rem;
+  }
+  .summary-strip div strong { display: block; font-size: 1.1rem; color: var(--accent); }
+  section { margin-bottom: 36px; }
+  section h2 {
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-bottom: 4px;
+  }
+  .verdict { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    background: var(--panel-bg);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+  }
+  tr:hover { background: #fafafa; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .tag-jingle { background: var(--jingle); color: #8a1f1f; }
+  .tag-jangle { background: var(--jangle); color: #7a5c00; }
+  .tag-clear  { background: var(--clear); color: #1f6d3f; }
+  .empty-note {
+    color: var(--muted);
+    font-style: italic;
+    padding: 12px 0;
+  }
+
+  /* --- Stress-test badge (Panel 2) --- */
+  .stress-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .stress-clean { background: var(--clear); color: #1f6d3f; }
+  .stress-confused { background: var(--jangle); color: #7a5c00; }
+  .stress-detail { color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+
+  /* --- Venn diagram --- */
+  .venn-wrap {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .venn-wrap svg { flex: 0 0 auto; }
+  .venn-legend { font-size: 0.82rem; color: var(--text); }
+  .venn-legend .legend-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .venn-legend .swatch { width: 14px; height: 14px; border-radius: 3px; flex: none; }
+  .venn-note { color: var(--muted); font-size: 0.8rem; margin-top: 8px; max-width: 320px; }
+
+  /* --- Clickable waypoint panel --- */
+  .waypoint-list { display: flex; flex-direction: column; gap: 8px; }
+  details.waypoint {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    background: var(--panel-bg);
+  }
+  details.waypoint summary {
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+  }
+  details.waypoint summary::-webkit-details-marker { display: none; }
+  details.waypoint summary::before {
+    content: "▸ ";
+    color: var(--accent);
+  }
+  details.waypoint[open] summary::before {
+    content: "▾ ";
+  }
+  details.waypoint .wp-body {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  details.waypoint .wp-body .field-label {
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 2px;
+  }
+  details.waypoint .wp-body .field { margin-bottom: 10px; }
+  details.waypoint .wp-body .field:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+  <h1>Literature Dashboard</h1>
+  <div class="subtitle">[Construct name] — prior-art search results, built during Step 1 and updated in Step 2</div>
+
+  <div class="summary-strip">
+    <div><strong>[N]</strong>keywords searched (constructs)</div>
+    <div><strong>[N]</strong>existing constructs found</div>
+    <div><strong>[N%]</strong>stress-test sort accuracy</div>
+    <div><strong>[N]</strong>existing items found</div>
+    <div><strong>[date]</strong>last updated</div>
+  </div>
+
+  <section id="constructs">
+    <h2>Panel 1 — Existing constructs (jingle-jangle check)</h2>
+    <p class="verdict">[One-line verdict, e.g. "no jangle risk found; one jingle risk found and resolved by renaming."]</p>
+
+    <!--
+      Venn diagram: schematic, not a mathematically precise proportional Venn diagram.
+      One circle per construct (yours + each relevant finding). Circle overlap encodes
+      CONCEPTUAL overlap, decided by whoever ran the search:
+        - No/low overlap  → circles apart or barely touching
+        - Related-but-distinct → circles overlap ~20-40%
+        - Jangle risk (probably the same construct, different name) → circles overlap ~70-90%
+        - Jingle risk (same name, DIFFERENT construct) → circles should NOT overlap much
+          (the meanings differ) but are drawn with a dashed red outline to flag the name
+          collision, since the danger here is the shared label, not shared meaning.
+      Add/remove circle+text pairs and adjust cx/cy/r by hand to match what was found;
+      2-5 circles is the usual range. Omit this whole diagram if Panel 1 has no rows.
+    -->
+    <div class="venn-wrap">
+      <svg viewBox="0 0 360 240" width="360" height="240" role="img" aria-label="Overlap between our construct and constructs found in the literature search">
+        <!-- Our construct -->
+        <circle cx="150" cy="120" r="80" fill="#3a5a8c" fill-opacity="0.35" stroke="#3a5a8c" stroke-width="2"/>
+        <text x="110" y="90" font-size="13" fill="#1a1a1a" font-weight="600">[Our construct]</text>
+
+        <!-- Example: jangle risk - heavy overlap, same construct under another name -->
+        <circle cx="210" cy="120" r="80" fill="#c99a1f" fill-opacity="0.30" stroke="#c99a1f" stroke-width="2"/>
+        <text x="230" y="90" font-size="13" fill="#1a1a1a" font-weight="600">[Jangle: Found B]</text>
+
+        <!-- Example: related-but-distinct - partial overlap -->
+        <circle cx="90" cy="185" r="50" fill="#4a9d6f" fill-opacity="0.30" stroke="#4a9d6f" stroke-width="2"/>
+        <text x="45" y="230" font-size="12" fill="#1a1a1a" font-weight="600">[Related: Found C]</text>
+
+        <!-- Example: jingle risk - same name, little/no conceptual overlap, dashed red outline flags the collision -->
+        <circle cx="300" cy="60" r="40" fill="#b13a3a" fill-opacity="0.12" stroke="#b13a3a" stroke-width="2" stroke-dasharray="5,4"/>
+        <text x="270" y="25" font-size="12" fill="#8a1f1f" font-weight="600">[Jingle: Found D]</text>
+      </svg>
+      <div class="venn-legend">
+        <div class="legend-row"><span class="swatch" style="background:#3a5a8c;"></span> Our construct</div>
+        <div class="legend-row"><span class="swatch" style="background:#c99a1f;"></span> Jangle risk (heavy overlap - consider adopting)</div>
+        <div class="legend-row"><span class="swatch" style="background:#4a9d6f;"></span> Related but distinct (partial overlap)</div>
+        <div class="legend-row"><span class="swatch" style="background:#b13a3a; border:1px dashed #8a1f1f;"></span> Jingle risk (dashed = name collision, not shared meaning)</div>
+        <p class="venn-note">Overlap shown here is a qualitative judgment call made during the search, not a statistical estimate — it's meant to make the pattern of findings scannable, not to be measured precisely.</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Keyword searched</th>
+          <th>Construct/instrument found</th>
+          <th>Source</th>
+          <th>Definition (short)</th>
+          <th>Relationship</th>
+          <th>Recommended action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example row — replace/remove -->
+        <tr>
+          <td>[exact term]</td>
+          <td>[name]</td>
+          <td>[citation/link]</td>
+          <td>[1–2 sentence paraphrase]</td>
+          <td><span class="tag tag-jingle">Jingle risk</span></td>
+          <td>[e.g., rename ours to avoid collision]</td>
+        </tr>
+        <!-- <tr><td colspan="6" class="empty-note">Searched [keywords]; nothing relevant found.</td></tr> -->
+      </tbody>
+    </table>
+  </section>
+
+  <section id="waypoints">
+    <h2>Panel 2 — Construct map (click a waypoint)</h2>
+    <p class="verdict">[Note the map type — respondent / item-response / full — and how many waypoints,
+    plus the overall stress-test verdict, e.g. "6 waypoints; one confusion pair found and resolved
+    by merging Levels 3–4 after round 2."]
+    Built once Step 1's blind-sort stress-test is done, so definitions and stress-test results land
+    together; example items filled in once Step 2 runs.</p>
+
+    <div class="waypoint-list">
+      <!-- One details block per waypoint, top to bottom or bottom to top — pick one order and
+           say which in the verdict above. Copy this block per waypoint. -->
+      <details class="waypoint">
+        <summary>[Waypoint label] — [very short cue, e.g. "top / most advanced"]</summary>
+        <div class="wp-body">
+          <div class="field">
+            <span class="field-label">Definition</span>
+            [1–2 sentence waypoint description from the construct map]
+          </div>
+          <div class="field">
+            <span class="field-label">Stress-test result</span>
+            <!-- Clean example — use the "stress-clean" badge when this waypoint's vignettes were
+                 all sorted correctly. -->
+            <span class="stress-badge stress-clean">✓ No confusion</span>
+            <div class="stress-detail">Sorted correctly in [N]/[N] vignettes, [N] round(s).</div>
+            <!-- Confused example — swap in this badge+detail pair instead when there was a mix-up,
+                 and delete whichever variant doesn't apply to this waypoint.
+            <span class="stress-badge stress-confused">⚠ Confused with [Other Waypoint]</span>
+            <div class="stress-detail">
+              [N] of [N] vignettes sorted into [Other Waypoint] instead in round 1.
+              Resolved by [action taken, e.g. "sharpening the wording" / "merging the two
+              waypoints"] — re-tested clean in round 2. / Not yet resolved — flagged as an open
+              risk in the design document.
+            </div>
+            -->
+          </div>
+          <div class="field">
+            <span class="field-label">Example item(s) targeting this waypoint</span>
+            [Item text or short paraphrase, tagged new/adapted/reused — pull from the Step 2 item
+            bank. Before Step 2 runs, leave this as "Not yet available — completes in Step 2."]
+          </div>
+        </div>
+      </details>
+      <!-- repeat for each waypoint -->
+    </div>
+  </section>
+
+  <section id="items">
+    <h2>Panel 3 — Existing items/instruments (added in Step 2)</h2>
+    <p class="verdict">[One-line verdict, e.g. "3 reusable items found for middle waypoints; top/bottom need new items."]</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Source instrument</th>
+          <th>Item/task description</th>
+          <th>Target waypoint(s)</th>
+          <th>Format</th>
+          <th>License status</th>
+          <th>Reuse decision</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example row — replace/remove -->
+        <tr>
+          <td>[instrument name]</td>
+          <td>[short paraphrase, not verbatim]</td>
+          <td>[waypoint label]</td>
+          <td>[format]</td>
+          <td>[open / owned / unclear / restricted]</td>
+          <td>[reuse / adapt / inspired-by-rewrite / not used]</td>
+        </tr>
+        <!-- <tr><td colspan="6" class="empty-note">Not yet run — completes in Step 2.</td></tr> -->
+      </tbody>
+    </table>
+  </section>
+
+</body>
+</html>

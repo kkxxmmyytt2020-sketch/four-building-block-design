@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.DS_Store
+four-building-block-design/evals/results/

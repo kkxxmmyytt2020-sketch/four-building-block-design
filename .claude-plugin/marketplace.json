@@ -1,0 +1,14 @@
+{
+  "name": "four-building-block-local",
+  "description": "Marketplace for the Four Building Block Design plugin (Mark Wilson's BEAR Assessment System).",
+  "owner": {
+    "name": "Yunting Liu"
+  },
+  "plugins": [
+    {
+      "name": "four-building-block-design",
+      "source": "./four-building-block-design",
+      "description": "Design a measurement instrument with Wilson's four building blocks: construct map, items design, outcome space, measurement model."
+    }
+  ]
+}

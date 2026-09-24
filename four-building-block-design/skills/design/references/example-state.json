@@ -1,0 +1,55 @@
+{
+  "project": {
+    "construct": "Reasoning about variability",
+    "one_sentence": "Middle-school students' ability to notice, describe and use variability in data when drawing conclusions.",
+    "respondents": "Grades 6-8 students",
+    "setting": "Classroom formative assessment",
+    "decision": "Instructional grouping (low stakes)",
+    "created": "2026-09-24",
+    "updated": "2026-09-24"
+  },
+  "stages": {
+    "b1": {"status": "approved"},
+    "b2": {"status": "in_progress"},
+    "b3": {"status": "not_started"},
+    "b4": {"status": "not_started"}
+  },
+  "literature": {
+    "keywords": ["reasoning about variability", "statistical variation", "informal inferential reasoning", "data modeling"],
+    "verdict": "No jangle risk; one related-but-distinct construct kept separate.",
+    "constructs": [
+      {"keyword": "informal inferential reasoning", "name": "Informal inferential reasoning", "source": "Makar & Rubin (2009)", "definition": "Drawing generalisations beyond the data without formal procedures.", "relationship": "related", "action": "Sharpen distinction: ours stops at describing and using spread."},
+      {"keyword": "statistical variation", "name": "Variation (statistics)", "source": "General usage", "definition": "Spread of a distribution as a statistic, not a reasoning skill.", "relationship": "jingle", "action": "Keep 'reasoning about' in the name."}
+    ]
+  },
+  "construct_map": {
+    "map_type": "respondent",
+    "waypoints": [
+      {"id": "W1", "label": "Ignores variability", "cue": "lowest", "definition": "Treats single values as the whole story; differences between cases are not noticed."},
+      {"id": "W2", "label": "Notices variability", "definition": "Points out that values differ but does not describe how much or why."},
+      {"id": "W3", "label": "Describes variability", "definition": "Describes spread with a range, clusters or informal measures."},
+      {"id": "W4", "label": "Uses variability", "cue": "highest", "definition": "Uses spread to judge how confident a comparison or conclusion can be."}
+    ],
+    "expert_review": [
+      {"reviewer": "content-expert", "issues": "W3 mixes informal and formal measures.", "revisions": "Say 'informal or formal measures of spread'."}
+    ],
+    "stress_test": {
+      "rounds": [],
+      "resolution": {"W2": "Round 1 mixed W2/W3; added 'no quantity or pattern named' to W2."}
+    }
+  },
+  "items": {
+    "keywords": ["variability items middle school"],
+    "verdict": "",
+    "existing": [],
+    "bank": [
+      {"id": "I1", "text": "Two classes' plant heights: which class grew more evenly? Explain.", "waypoints": ["W3", "W4"], "format": "open response", "origin": "new"}
+    ]
+  },
+  "outcome_space": [],
+  "measurement_model": {},
+  "loopbacks": [],
+  "decisions": [
+    {"stage": "b1", "decision": "Respondent-side construct map with 4 waypoints", "decided_by": "user", "evidence": "literature", "date": "2026-09-24"}
+  ]
+}

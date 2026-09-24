@@ -1,0 +1,7 @@
+{
+  "name": "four-building-block-design",
+  "version": "0.1.0",
+  "description": "Design a test, survey, rubric or rating scale with Mark Wilson's BEAR Assessment System: construct map -> items design -> outcome space -> measurement model. The construct map is stress-tested by independent reviewer agents and a truly blind sorter agent before any items are written.",
+  "author": { "name": "Yunting Liu" },
+  "keywords": ["measurement", "psychometrics", "BEAR Assessment System", "construct map", "Rasch", "item response theory", "rubric", "survey design"]
+}
