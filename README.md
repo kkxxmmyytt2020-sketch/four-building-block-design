@@ -15,43 +15,17 @@ Measures*:
 
 ![workflow](four-building-block-design/assets/workflow.png)
 
-## Why a plugin rather than a single skill
-
-This started as a single skill. The plugin keeps the same method and adds what a skill on its own can't do:
-
-- **A blind sort that is actually blind.** To test whether the waypoints are distinct, Claude
-  writes short vignettes for each waypoint and someone sorts them back without the labels. In a
-  single skill, the same Claude that wrote the answer key also does the sorting. Here,
-  `shuffle_vignettes.py` splits the answer key from the packet. The `blind-sorter` agent gets
-  only the packet and can only read files, and `blind_sort_score.py` scores the result. It
-  reports adjacent confusion (sharpen or merge two waypoints) separately from non-adjacent
-  confusion (the continuum itself is in doubt).
-- **An independent review panel.** `content-expert`, `measurement-reviewer` and `equity-reviewer`
-  run in parallel as separate agents. They see the draft, not Claude's reasoning about it.
-- **Scripts instead of hand-edited files.** Progress lives in one `fbb-state.json`. The
-  three-panel dashboard (`fbb-dashboard.html`) is rebuilt from it after each change.
-- **You approve each block.** Every block ends with approve / revise / loop back / pause, and the
-  next block doesn't start until you approve.
-
 ## Install
 
 **Claude Code**
 ```bash
 claude plugin marketplace add kkxxmmyytt2020-sketch/four-building-block-design
 claude plugin install four-building-block-design@four-building-block-local
-# from a local clone instead:
-claude plugin marketplace add ~/Desktop/four-building-block-design
-# after editing the source:
-claude plugin update four-building-block-design@four-building-block-local
 ```
 
 **Cowork (Claude desktop app)**: open the Cowork tab → Customize, and upload the plugin as a file
 (zip the inner `four-building-block-design/` folder). See
 [Install plugins](https://claude.com/docs/cowork/guide/plugins).
-
-If you also have the older `four-building-block-design` skill synced from claude.ai, both may
-respond to the same requests. Disable one of them in Claude Code, or keep the skill for
-claude.ai chat only.
 
 ## Use
 
